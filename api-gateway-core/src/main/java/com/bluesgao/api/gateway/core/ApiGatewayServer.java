@@ -1,6 +1,6 @@
 package com.bluesgao.api.gateway.core;
 
-import com.bluesgao.api.gateway.core.handler.inbound.AuthenticationHandler;
+import com.bluesgao.api.gateway.core.handler.inbound.AuthHandler;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelInitializer;
@@ -37,7 +37,7 @@ public class ApiGatewayServer {
                             ch.pipeline().addLast(new HttpServerCodec());
                             ch.pipeline().addLast( new HttpObjectAggregator(65536));
                             //ch.pipeline().addLast(new ChunkedWriteHandler());
-                            ch.pipeline().addLast(new AuthenticationHandler());
+                            ch.pipeline().addLast(new AuthHandler());
                         }
                     });
 

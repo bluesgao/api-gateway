@@ -9,11 +9,14 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
+/**
+ * 请求鉴权处理器
+ */
 @Slf4j
-public class AuthenticationHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+public class AuthHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
     @Override
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, FullHttpRequest fullHttpRequest) throws Exception {
-        log.info("AuthenticationHandler channelRead0");
+        log.info("AuthHandler channelRead0");
         RequestParser requestParser = new RequestParser(fullHttpRequest);
         Map<String, String> requestMap = requestParser.parse();
         log.info("requestMap:{}", JSON.toJSONString(requestMap));
