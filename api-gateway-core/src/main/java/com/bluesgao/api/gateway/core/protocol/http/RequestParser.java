@@ -8,6 +8,9 @@ import io.netty.handler.codec.http.multipart.Attribute;
 import io.netty.handler.codec.http.multipart.HttpPostRequestDecoder;
 import io.netty.handler.codec.http.multipart.InterfaceHttpData;
 import io.netty.util.CharsetUtil;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -17,17 +20,11 @@ import java.util.Map;
 /**
  * HTTP请求参数解析器, 支持GET, POST
  */
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RequestParser {
     private FullHttpRequest request;
-
-    /**
-     * 构造一个解析器
-     *
-     * @param req
-     */
-    public RequestParser(FullHttpRequest req) {
-        this.request = req;
-    }
 
     /**
      * 解析请求参数

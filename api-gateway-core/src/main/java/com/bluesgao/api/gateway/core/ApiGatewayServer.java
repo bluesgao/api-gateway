@@ -29,7 +29,7 @@ public class ApiGatewayServer {
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
-                            log.info("initChannel...");
+                            log.debug("initChannel...");
                             // server端发送的是httpResponse，所以要使用HttpResponseEncoder进行编码
                             //ch.pipeline().addLast(new HttpResponseEncoder());
                             // server端接收到的是httpRequest，所以要使用HttpRequestDecoder进行解码
