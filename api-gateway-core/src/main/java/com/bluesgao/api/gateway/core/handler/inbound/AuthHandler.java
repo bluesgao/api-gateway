@@ -29,13 +29,18 @@ public class AuthHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
         if (!flag) {
             log.debug("鉴权不通过");
             // 响应
-            CommonResult<String> result = new CommonResult<>();
-            result.setCode(ResultCodeEnum.APP_ERROR_AUTH_PARAMS.getCode());
-            result.setMessage(ResultCodeEnum.APP_ERROR_AUTH_PARAMS.getMessage());
-            new ResponseBuilder(ctx, result).reponse();
+            CommonResult result = new CommonResult().buildError(ResultCodeEnum.APP_ERROR_AUTH_PARAMS.getCode(), ResultCodeEnum.APP_ERROR_AUTH_PARAMS.getMessage());
+            new ResponseBuilder(ctx, result).jsonReponse();
         } else {
             log.debug("鉴权通过");
 
         }
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        //在发生异常时，记录错误并关闭Channel
+        cause.printStackTrace();
+        ctx.close();
     }
 }

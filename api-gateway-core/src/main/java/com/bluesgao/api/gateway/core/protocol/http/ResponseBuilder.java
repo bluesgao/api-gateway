@@ -21,7 +21,7 @@ public class ResponseBuilder {
     private ChannelHandlerContext ctx;
     private CommonResult result;
 
-    public void reponse() {
+    public void jsonReponse() {
         // 1.设置响应
         FullHttpResponse resp = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1,
                 HttpResponseStatus.OK,
