@@ -1,114 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-	<conversionRule conversionWord="m" converterClass="com.bluesgao.api.gateway.core.common.ArgumentJsonFormatLayout"/>
-	<appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-		<encoder charset="UTF-8">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
-		</encoder>
-	</appender>
+    <contextName>apiGateWay</contextName>
+    <conversionRule conversionWord="m" converterClass="com.bluesgao.api.gateway.core.common.ArgumentJsonFormatLayout"/>
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <property name="LOG_DIR" value="${catalina.base}/logs"/>
+    <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
+    <property name="LOG_PATTERN" value="%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{50} - %msg%n"/>
 
-	<appender name="SYS_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/export/home/tomcat/logs/cfsqmoduleworker/system_info.log</file>
-		<append>true</append>
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>INFO</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY</onMismatch>
-		</filter>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/export/home/tomcat/logs/cfsqmoduleworker/system_info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>100MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-			<maxHistory>100</maxHistory>
-		</rollingPolicy>
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
 
-		<encoder charset="UTF-8">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
-		</encoder>
-	</appender>
+        <encoder charset="UTF-8">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>100MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+            <maxHistory>100</maxHistory>
+        </rollingPolicy>
 
-	<appender name="SYS_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/export/home/tomcat/logs/cfsqmoduleworker/system_error.log</file>
-		<append>true</append>
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>ERROR</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY</onMismatch>
-		</filter>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/export/home/tomcat/logs/cfsqmoduleworker/system_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>100MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-			<maxHistory>100</maxHistory>
-		</rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
 
-		<encoder charset="UTF-8">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
-		</encoder>
-	</appender>
+    <!--mybatis log configure-->
+    <logger name="com.apache.ibatis" level="TRACE"/>
+    <logger name="java.sql.Connection" level="DEBUG"/>
+    <logger name="java.sql.Statement" level="DEBUG"/>
+    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
 
-	<appender name="APP_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/export/home/tomcat/logs/cfsqmoduleworker/app_info.log</file>
-		<append>true</append>
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>INFO</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY</onMismatch>
-		</filter>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/export/home/tomcat/logs/cfsqmoduleworker/app_info.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>100MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-			<maxHistory>100</maxHistory>
-		</rollingPolicy>
-
-		<encoder charset="UTF-8">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
-		</encoder>
-	</appender>
-
-	<appender name="APP_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<file>/export/home/tomcat/logs/cfsqmoduleworker/app_error.log</file>
-		<append>true</append>
-		<filter class="ch.qos.logback.classic.filter.LevelFilter">
-			<level>ERROR</level>
-			<onMatch>ACCEPT</onMatch>
-			<onMismatch>DENY</onMismatch>
-		</filter>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<fileNamePattern>/export/home/tomcat/logs/cfsqmoduleworker/app_error.%d{yyyy-MM-dd}.%i.log</fileNamePattern>
-			<timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-				<maxFileSize>100MB</maxFileSize>
-			</timeBasedFileNamingAndTriggeringPolicy>
-			<maxHistory>100</maxHistory>
-		</rollingPolicy>
-
-		<encoder charset="UTF-8">
-			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{80} [%L] - %msg%n</pattern>
-		</encoder>
-	</appender>
-
-
-
-	<logger name="java.sql.Connection" level="DEBUG" />
-	<logger name="java.sql.Statement" level="DEBUG" />
-	<logger name="java.sql.PreparedStatement" level="DEBUG" />
- 
-
-	<logger name="com.jd.jr.cf.cfsqmoduleworker" level="INFO" additivity="false">
-		<appender-ref ref="CONSOLE" />
-		<appender-ref ref="APP_INFO" />
-		<appender-ref ref="APP_ERROR" />
-	</logger>
-
-
-	<root level="INFO">
-		<appender-ref ref="CONSOLE" />
-		<appender-ref ref="SYS_INFO" />
-		<appender-ref ref="SYS_ERROR" />
-	</root>
-
+    <!-- 日志输出级别 表示把>=level级别的日志都输出到appender-->
+    <root level="DEBUG">
+        <appender-ref ref="CONSOLE"/>
+<!--        <appender-ref ref="FILE_INFO"/>
+        <appender-ref ref="FILE_ERROR"/>-->
+    </root>
 </configuration>
