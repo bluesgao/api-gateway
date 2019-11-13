@@ -2,22 +2,26 @@ package com.bluesgao.api.gateway.core.common;
 
 /**
  * 通用返回码
+ * 6位长度
+ * 1位代表系统
+ * 2-3位代表模块
+ * 4-6位代码业务具体错误
  */
 public enum ResultCodeEnum {
-    SUCCESS(0, "成功"),
-    FAIL(9999, "错误"),
+    SUCCESS("000000", "成功"),
+    FAIL("999999", "错误"),
     //app相关错误码
-    ERROR_APP_ILLEGAL(1000, "appID非法"),
-    APP_ERROR_STATUS(1001, "appID状态异常"),
+    ERROR_APP_ILLEGAL("101001", "appID非法"),
+    APP_ERROR_STATUS("101002", "appID状态异常"),
     //鉴权相关错误码
-    APP_ERROR_AUTH_PARAMS(2000, "鉴权参数不全"),
-    APP_ERROR_ACCESS_TOKEN(2001, "授权码过期"),
-    APP_ERROR_REFRESH_TOKEN(2002, "刷新码过期");
+    APP_ERROR_AUTH_PARAMS("101003", "鉴权参数不全"),
+    APP_ERROR_ACCESS_TOKEN("101004", "授权码过期"),
+    APP_ERROR_REFRESH_TOKEN("101005", "刷新码过期");
     //商品相关错误码
     //类目相关错误码
     //订单相关错误码
 
-    private Integer code = null;
+    private String code = null;
     private String message = null;
 
     public static ResultCodeEnum getEnum(Integer code) {
@@ -38,12 +42,12 @@ public enum ResultCodeEnum {
         }
     }
 
-    private ResultCodeEnum(Integer code, String message) {
+    private ResultCodeEnum(String code, String message) {
         this.code = code;
         this.message = message;
     }
 
-    public Integer getCode() {
+    public String getCode() {
         return this.code;
     }
 
